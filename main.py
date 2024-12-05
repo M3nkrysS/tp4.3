@@ -5,6 +5,7 @@ améloration des personnages D&D
 """
 from random import randint
 from enum import Enum
+from dataclasses import dataclass
 
 
 def roule_de(faces_de):
@@ -34,9 +35,7 @@ class Alignement(Enum):
     NEUTRAL_EVIL = 8
     CHAOTIC_EVIL = 9
 
-    def trouve_alignement(self):
-        choose_alignement = randint(0, 9)
-        print(Alignement.trouve_alignement())
+
 class NPC:
     def __init__(self, nom, race, espece, proffession):
         self.force = roll_of_the_dices(4)
@@ -51,12 +50,16 @@ class NPC:
         self.espece = espece
         self.pv = randint(1, 20)
         self.proffession = proffession
-        self.alignement = Alignement(Enum).trouve_alignement()
+        self.alignement = Alignement(roule_de(10) - 1)
 
     def afficher_characteristiques(self):
-        print(f"\nNom: {self.nom}\nRace: {self.race}\nEspèce: {self.espece}\nProffession: {self.proffession}\nAlignement: {self.alignement}\nPoints de vie: {self.pv}\nClasse d'armure: {self.ac}\nForce: {self.force}\nagilite: {self.agilite}\nsagesse: {self.sagesse}\ncharisme: {self.charisme}\nintelligence: {self.intelligence}\nconstitution: {self.constitution}")
+        print(f"\nNom: {self.nom}\nRace: {self.race}\nEspèce: {self.espece}\nProffession: {self.proffession}\n{self.alignement}\nPoints de vie: {self.pv}\nClasse d'armure: {self.ac}\nForce: {self.force}\nagilite: {self.agilite}\nsagesse: {self.sagesse}\ncharisme: {self.charisme}\nintelligence: {self.intelligence}\nconstitution: {self.constitution}")
 
-    #def attaque_statique(self):
+    def verifier_vie(self):
+        if self.pv > 0:
+            return "vivant"
+        else:
+            return "mort"
 
 
 class Kobold(NPC):
@@ -117,6 +120,21 @@ class Hero(NPC):
         print(f"Oppenheimer reçois {self.qtte_dmg} dégats\nOppenheimer a {self.pv} pv")
 
 
+@dataclass
+class Item:
+    quantite: int = roule_de(17)
+    nom: str = "potions"
+
+
+class SacADos:
+    def __init__(self):
+        self.liste_items = []
+
+    def ajouter_item(self):
+        i = Item()
+        self.liste_items.append(i)
+
+
 npc = NPC("ennemi", "méchant", "très méchant", "vilain")
 npc.afficher_characteristiques()
 
@@ -128,3 +146,5 @@ k.attaquer(npc)
 h.attaquer(npc)
 k.subir_dommage(roule_de(6))
 h.subir_dommage(roule_de(6))
+k.verifier_vie()
+h.verifier_vie()

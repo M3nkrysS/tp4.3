@@ -122,17 +122,28 @@ class Hero(NPC):
 
 @dataclass
 class Item:
-    quantite: int = roule_de(17)
+    quantite: int = roule_de(2)
     nom: str = "potions"
 
 
-class SacADos:
+class BackPack:
     def __init__(self):
         self.liste_items = []
 
     def ajouter_item(self):
-        i = Item()
-        self.liste_items.append(i)
+        self.repeat = True
+        while self.repeat:
+            i = Item()
+#trouver un moyen d'ajouter des potions
+            if self.liste_items[0] > 0:
+                self.liste_items = self.liste_items[i.quantite] + i.quantite
+            else:
+                self.liste_items.append(i.quantite)
+                self.liste_items.append(i.nom)
+            print(self.liste_items)
+            self.ajout = input(str("veux-tu ajouter d'autres potions Y/N? >>"))
+            if self.ajout == "N":
+                self.repeat = False
 
 
 npc = NPC("ennemi", "méchant", "très méchant", "vilain")
@@ -148,3 +159,6 @@ k.subir_dommage(roule_de(6))
 h.subir_dommage(roule_de(6))
 k.verifier_vie()
 h.verifier_vie()
+
+p = BackPack()
+p.ajouter_item()

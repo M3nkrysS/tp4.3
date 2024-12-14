@@ -137,24 +137,30 @@ class BackPack:
         self.liste_items.append(i.nom)
 # boucle pour ajouter autant de potions que tu veux
         while self.repeat:
-            print(self.liste_items)
+            print(f"équipement: {self.liste_items[0]} {self.liste_items[1]}")
             self.ajout = input(str("veux-tu ajouter d'autres potions Y/N? >>"))
             if self.ajout == "N":
                 self.repeat = False
-            if self.liste_items[0] > 0:
-                self.liste_items[0] += i.quantite
+            elif self.ajout == "Y":
+                if self.liste_items[0] > 0:
+                    self.liste_items[0] += i.quantite
 
     def retirer_item(self):
-        print(self.liste_items)
+        print(f"équipement: {self.liste_items[0]} {self.liste_items[1]}")
         self.item_a_retirer = input(str("Quel item voulez-vous retirer? >>"))
         if self.liste_items[1] == self.item_a_retirer:
-            print("effacage de l'item")
-            self.nbr_item_effacer = input(int("Combien item voulez-vous retirer? >>"))
-            self.nbr_effacer = self.nbr_item_effacer
+            self.nbr_item = input("Combien d'item voulez-vous retirer? >>")
+            self.nbr_item_effacer = int(self.nbr_item)
             if self.liste_items[0] < self.nbr_item_effacer:
                 print("ERROR: Le nombre d'item a retirer est plus grand que le nombre d'item")
-            elif self.nbr_effacer < 0:
-                print("ERROR: Ne peux pas effacer i=un nombre d'objets négatif")
+            elif self.nbr_item_effacer < 0:
+                print("ERROR: Ne peux pas effacer un nombre d'objets négatif")
+            else:
+                self.liste_items[0] -= self.nbr_item_effacer
+                print("effacage de l'item")
+                print(f"il reste {self.liste_items[0]} {self.liste_items[1]}")
+        elif self.item_a_retirer == "aucun":
+            print("ERROR: Vous devez choisir un item")
         elif self.liste_items[1] != self.item_a_retirer:
             print("ERROR: L'item n'est pas dans le sac")
 

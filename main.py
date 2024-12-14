@@ -137,32 +137,34 @@ class BackPack:
         self.liste_items.append(i.nom)
 # boucle pour ajouter autant de potions que tu veux
         while self.repeat:
-            print(f"équipement: {self.liste_items[0]} {self.liste_items[1]}")
+            print(f"\néquipement: {self.liste_items[0]} {self.liste_items[1]}")
             self.ajout = input(str("veux-tu ajouter d'autres potions Y/N? >>"))
-            if self.ajout == "N":
+            if self.ajout == "N" or self.ajout == "n":
                 self.repeat = False
-            elif self.ajout == "Y":
+            elif self.ajout == "Y" or self.ajout == "y":
                 if self.liste_items[0] > 0:
                     self.liste_items[0] += i.quantite
+            else:
+                print("ce n'est pas une réponse valide")
 
     def retirer_item(self):
-        print(f"équipement: {self.liste_items[0]} {self.liste_items[1]}")
+        print(f"\néquipement: {self.liste_items[0]} {self.liste_items[1]}")
         self.item_a_retirer = input(str("Quel item voulez-vous retirer? >>"))
         if self.liste_items[1] == self.item_a_retirer:
             self.nbr_item = input("Combien d'item voulez-vous retirer? >>")
             self.nbr_item_effacer = int(self.nbr_item)
             if self.liste_items[0] < self.nbr_item_effacer:
-                print("ERROR: Le nombre d'item a retirer est plus grand que le nombre d'item")
+                print("\nERROR: Le nombre d'item a retirer est plus grand que le nombre d'item")
             elif self.nbr_item_effacer < 0:
-                print("ERROR: Ne peux pas effacer un nombre d'objets négatif")
+                print("\nERROR: Ne peux pas effacer un nombre d'objets négatif")
             else:
                 self.liste_items[0] -= self.nbr_item_effacer
-                print("effacage de l'item")
+                print("\neffacage de l'item")
                 print(f"il reste {self.liste_items[0]} {self.liste_items[1]}")
         elif self.item_a_retirer == "aucun":
-            print("ERROR: Vous devez choisir un item")
+            print("\nERROR: Vous devez choisir un item")
         elif self.liste_items[1] != self.item_a_retirer:
-            print("ERROR: L'item n'est pas dans le sac")
+            print("\nERROR: L'item n'est pas valide ou n'est pas dans le sac")
 
 
 npc = NPC("ennemi", "méchant", "très méchant", "vilain")

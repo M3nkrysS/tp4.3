@@ -88,7 +88,7 @@ class Kobold(NPC):
     def subir_dommage(self, qtte_dmg):
         self.qtte_dmg = qtte_dmg
         self.pv -= self.qtte_dmg
-        print(f"\nle kobold reçois {self.qtte_dmg} dégats\nle kobold a {self.pv} pv")
+        print(f"\nle kobold reçoit {self.qtte_dmg} dégats\nle kobold a {self.pv} pv")
 
 
 class Hero(NPC):
@@ -148,23 +148,26 @@ class BackPack:
                 print("ce n'est pas une réponse valide")
 
     def retirer_item(self):
-        print(f"\néquipement: {self.liste_items[0]} {self.liste_items[1]}")
-        self.item_a_retirer = input(str("Quel item voulez-vous retirer? >>"))
-        if self.liste_items[1] == self.item_a_retirer:
-            self.nbr_item = input("Combien d'item voulez-vous retirer? >>")
-            self.nbr_item_effacer = int(self.nbr_item)
-            if self.liste_items[0] < self.nbr_item_effacer:
-                print("\nERROR: Le nombre d'item a retirer est plus grand que le nombre d'item")
-            elif self.nbr_item_effacer < 0:
-                print("\nERROR: Ne peux pas effacer un nombre d'objets négatif")
-            else:
-                self.liste_items[0] -= self.nbr_item_effacer
-                print("\neffacage de l'item")
-                print(f"il reste {self.liste_items[0]} {self.liste_items[1]}")
-        elif self.item_a_retirer == "aucun":
-            print("\nERROR: Vous devez choisir un item")
-        elif self.liste_items[1] != self.item_a_retirer:
-            print("\nERROR: L'item n'est pas valide ou n'est pas dans le sac")
+        self.replay = True
+        while self.replay:
+            print(f"\néquipement: {self.liste_items[0]} {self.liste_items[1]}")
+            self.item_a_retirer = input(str("Quel item voulez-vous retirer? >>"))
+            if self.liste_items[1] == self.item_a_retirer:
+                self.nbr_item = input("Combien d'item voulez-vous retirer? >>")
+                self.nbr_item_effacer = int(self.nbr_item)
+                if self.liste_items[0] < self.nbr_item_effacer:
+                    print("\nERROR: Le nombre d'item a retirer est plus grand que le nombre d'item")
+                elif self.nbr_item_effacer < 0:
+                    print("\nERROR: Ne peux pas effacer un nombre d'objets négatif")
+                else:
+                    self.liste_items[0] -= self.nbr_item_effacer
+                    print("\neffacage de l'item")
+                    print(f"il reste {self.liste_items[0]} {self.liste_items[1]}")
+            elif self.item_a_retirer == "aucun":
+                print("\nok")
+                self.replay = False
+            elif self.liste_items[1] != self.item_a_retirer:
+                print("\nERROR: L'item n'est pas valide ou n'est pas dans le sac")
 
 
 npc = NPC("ennemi", "méchant", "très méchant", "vilain")

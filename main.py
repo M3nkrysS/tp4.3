@@ -97,6 +97,7 @@ class Hero(NPC):
         self.result_dice20 = roule_de(20)
         self.result_dice8 = roule_de(8)
         self.result_dice6 = roule_de(6)
+        self.inventaire = BackPack()
 
     def attaquer(self, cible):
         self.cible = cible
@@ -151,7 +152,7 @@ class BackPack:
         self.replay = True
         while self.replay:
             print(f"\néquipement: {self.liste_items[0]} {self.liste_items[1]}")
-            self.item_a_retirer = input(str("Quel item voulez-vous retirer? >>"))
+            self.item_a_retirer = input("Quel item voulez-vous retirer? >>")
             if self.liste_items[1] == self.item_a_retirer:
                 self.nbr_item = input("Combien d'item voulez-vous retirer? >>")
                 self.nbr_item_effacer = int(self.nbr_item)
@@ -161,13 +162,22 @@ class BackPack:
                     print("\nERROR: Ne peux pas effacer un nombre d'objets négatif")
                 else:
                     self.liste_items[0] -= self.nbr_item_effacer
-                    print("\neffacage de l'item")
                     print(f"il reste {self.liste_items[0]} {self.liste_items[1]}")
+                    if self.liste_items[0] == 0:
+                        print(f"\nVous n'avez plus de {self.liste_items[1]}, effacage de l'item")
+                        self.liste_items.clear()
+                        self.replay = False
             elif self.item_a_retirer == "aucun":
-                print("\nok")
+                print("\nAucun objet n'est retiré")
                 self.replay = False
             elif self.liste_items[1] != self.item_a_retirer:
-                print("\nERROR: L'item n'est pas valide ou n'est pas dans le sac")
+                print("\nERROR: L'item n'est pas valide ou n'est pas/plus dans le sac")
+
+    def voir_contenue(self):
+        if len(self.liste_items) == 0:
+            print("\nVous n'avez pas d'items dans votre sac")
+        else:
+            print(f"\nVous avez {self.liste_items[0]} {self.liste_items[1]}")
 
 
 npc = NPC("ennemi", "méchant", "très méchant", "vilain")
@@ -187,3 +197,4 @@ h.verifier_vie()
 b = BackPack()
 b.ajouter_item()
 b.retirer_item()
+b.voir_contenue()

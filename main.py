@@ -144,7 +144,8 @@ class BackPack:
                 self.place = self.liste_items.index(self.item)
                 self.liste_items[self.place].quantite += quantite
         print(self.liste_items)
-
+# make this| similar to the method ajouter_item with line 199 as reference
+#          V
     def retirer_item(self, quantite, nom):
         self.replay = True
         while self.replay:
@@ -178,7 +179,7 @@ class BackPack:
 
 
 npc = NPC("ennemi", "méchant", "très méchant", "vilain")
-npc.afficher_characteristiques()
+# npc.afficher_characteristiques()
 
 k = Kobold()
 h = Hero()

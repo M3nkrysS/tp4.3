@@ -123,35 +123,32 @@ class Hero(NPC):
 
 @dataclass
 class Item:
-    quantite: int = 2
-    nom: str = "potions"
+    quantite: int
+    nom: str
 
 
 class BackPack:
     def __init__(self):
         self.liste_items = []
 
-    def ajouter_item(self):
-        i = Item()
-        self.repeat = True
-        self.liste_items.append(i.quantite)
-        self.liste_items.append(i.nom)
-# boucle pour ajouter autant de potions que tu veux
-        while self.repeat:
-            print(f"\néquipement: {self.liste_items[0]} {self.liste_items[1]}")
-            self.ajout = input(str("veux-tu ajouter d'autres potions Y/N? >>"))
-            if self.ajout == "N" or self.ajout == "n":
-                self.repeat = False
-            elif self.ajout == "Y" or self.ajout == "y":
-                if self.liste_items[0] > 0:
-                    self.liste_items[0] += i.quantite
+    def ajouter_item(self, quantite, nom):
+        self.quantite = quantite
+        self.nom = nom
+        self.item = Item(self.quantite, self.nom)
+        if len(self.liste_items) == 0:
+            self.liste_items.append(self.item)
+        else:
+            if self.item not in self.liste_items:
+                self.liste_items.append(self.item)
             else:
-                print("ce n'est pas une réponse valide")
+                self.place = self.liste_items.index(self.item)
+                self.liste_items[self.place].quantite += quantite
+        print(self.liste_items)
 
-    def retirer_item(self):
+    def retirer_item(self, quantite, nom):
         self.replay = True
         while self.replay:
-            print(f"\néquipement: {self.liste_items[0]} {self.liste_items[1]}")
+            print(f"\néquipement: {self.liste_items}")
             self.item_a_retirer = input("Quel item voulez-vous retirer? >>")
             if self.liste_items[1] == self.item_a_retirer:
                 self.nbr_item = input("Combien d'item voulez-vous retirer? >>")
@@ -177,7 +174,7 @@ class BackPack:
         if len(self.liste_items) == 0:
             print("\nVous n'avez pas d'items dans votre sac")
         else:
-            print(f"\nVous avez {self.liste_items[0]} {self.liste_items[1]}")
+            print(f"\nVous avez {self.liste_items}")
 
 
 npc = NPC("ennemi", "méchant", "très méchant", "vilain")
@@ -185,16 +182,18 @@ npc.afficher_characteristiques()
 
 k = Kobold()
 h = Hero()
-k.afficher_characteristiques()
-h.afficher_characteristiques()
-k.attaquer(npc)
-h.attaquer(npc)
-k.subir_dommage(roule_de(6))
-h.subir_dommage(roule_de(6))
-k.verifier_vie()
-h.verifier_vie()
+# k.afficher_characteristiques()
+# h.afficher_characteristiques()
+# k.attaquer(npc)
+# h.attaquer(npc)
+# k.subir_dommage(roule_de(6))
+# h.subir_dommage(roule_de(6))
+# k.verifier_vie()
+# h.verifier_vie()
 
 b = BackPack()
-b.ajouter_item()
-b.retirer_item()
+b.ajouter_item(10, "or")
+b.ajouter_item(10, "Argent")
+b.ajouter_item(10, "or")
+b.retirer_item(10, "or")
 b.voir_contenue()

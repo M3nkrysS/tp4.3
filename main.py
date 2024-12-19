@@ -37,6 +37,7 @@ class Alignement(Enum):
 
 
 class NPC:
+
     def __init__(self, nom, race, espece, proffession):
         self.force = roll_of_the_dices(4)
         self.agilite = roll_of_the_dices(4)
@@ -53,7 +54,9 @@ class NPC:
         self.alignement = Alignement(roule_de(10) - 1)
 
     def afficher_characteristiques(self):
-        print(f"\nNom: {self.nom}\nRace: {self.race}\nEspèce: {self.espece}\nProffession: {self.proffession}\n{self.alignement}\nPoints de vie: {self.pv}\nClasse d'armure: {self.ac}\nForce: {self.force}\nagilite: {self.agilite}\nsagesse: {self.sagesse}\ncharisme: {self.charisme}\nintelligence: {self.intelligence}\nconstitution: {self.constitution}")
+        print(
+            f"\nNom: {self.nom}\nRace: {self.race}\nEspèce: {self.espece}\nProffession: {self.proffession}\n{self.alignement}\nPoints de vie: {self.pv}\nClasse d'armure: {self.ac}\nForce: {self.force}\nagilite: {self.agilite}\nsagesse: {self.sagesse}\ncharisme: {self.charisme}\nintelligence: {self.intelligence}\nconstitution: {self.constitution}"
+        )
 
     def verifier_vie(self):
         if self.pv > 0:
@@ -63,6 +66,7 @@ class NPC:
 
 
 class Kobold(NPC):
+
     def __init__(self):
         super().__init__("Ken", "kobold", "kobold", "bard")
         self.result_dice20 = roule_de(20)
@@ -72,28 +76,38 @@ class Kobold(NPC):
     def attaquer(self, cible):
         self.cible = cible
         if self.result_dice20 == 20:
-            print(f"\nle Kobold a roulé un 20! L'ennemi reçoit {self.result_dice8} dégat")
+            print(
+                f"\nle Kobold a roulé un 20! L'ennemi reçoit {self.result_dice8} dégat"
+            )
             self.cible.pv -= self.result_dice8
         elif self.result_dice20 == 1:
             print("\nL'attaque du Kobold a raté lamentablement")
         else:
             if self.result_dice20 >= self.cible.ac:
-                print(f"\nle Kobold a roulé un {self.result_dice20}. Il fait {self.result_dice6} dégat")
+                print(
+                    f"\nle Kobold a roulé un {self.result_dice20}. Il fait {self.result_dice6} dégat"
+                )
                 self.cible.pv -= self.result_dice6
             else:
-                print(f"\nL'attaque du Kobold a raté, il a roulé un {self.result_dice20}")
+                print(
+                    f"\nL'attaque du Kobold a raté, il a roulé un {self.result_dice20}"
+                )
 
         print(f"la vie de l'ennemi est de: {self.cible.pv} pv")
 
     def subir_dommage(self, qtte_dmg):
         self.qtte_dmg = qtte_dmg
         self.pv -= self.qtte_dmg
-        print(f"\nle kobold reçoit {self.qtte_dmg} dégats\nle kobold a {self.pv} pv")
+        print(
+            f"\nle kobold reçoit {self.qtte_dmg} dégats\nle kobold a {self.pv} pv"
+        )
 
 
 class Hero(NPC):
+
     def __init__(self):
-        super().__init__("Oppenheimer", "arakocra", "Rainbowplum", "artificier")
+        super().__init__("Oppenheimer", "arakocra", "Rainbowplum",
+                         "artificier")
         self.result_dice20 = roule_de(20)
         self.result_dice8 = roule_de(8)
         self.result_dice6 = roule_de(6)
@@ -102,23 +116,31 @@ class Hero(NPC):
     def attaquer(self, cible):
         self.cible = cible
         if self.result_dice20 == 20:
-            print(f"Oppenheimer a roulé un 20! L'ennemi reçoit {self.result_dice8} dégat")
+            print(
+                f"Oppenheimer a roulé un 20! L'ennemi reçoit {self.result_dice8} dégat"
+            )
             self.cible.pv -= self.result_dice8
         elif self.result_dice20 == 1:
             print("L'attaque de Oppenheimer a raté lamentablement")
         else:
             if self.result_dice20 >= self.cible.ac:
-                print(f"Oppenheimer a roulé un {self.result_dice20}. Il fait {self.result_dice6} dégat")
+                print(
+                    f"Oppenheimer a roulé un {self.result_dice20}. Il fait {self.result_dice6} dégat"
+                )
                 self.cible.pv -= self.result_dice6
             else:
-                print(f"L'attaque de Oppenheimer a raté, il a roulé un {self.result_dice20}")
+                print(
+                    f"L'attaque de Oppenheimer a raté, il a roulé un {self.result_dice20}"
+                )
 
         print(f"la vie de l'ennemi est de: {self.cible.pv} pv")
 
     def subir_dommage(self, qtte_dmg):
         self.qtte_dmg = qtte_dmg
         self.pv -= self.qtte_dmg
-        print(f"Oppenheimer reçois {self.qtte_dmg} dégats\nOppenheimer a {self.pv} pv")
+        print(
+            f"Oppenheimer reçois {self.qtte_dmg} dégats\nOppenheimer a {self.pv} pv"
+        )
 
 
 @dataclass
@@ -128,6 +150,7 @@ class Item:
 
 
 class BackPack:
+
     def __init__(self):
         self.liste_items = []
 
@@ -138,38 +161,30 @@ class BackPack:
         if len(self.liste_items) == 0:
             self.liste_items.append(self.item)
         else:
-            if self.item not in self.liste_items:
-                self.liste_items.append(self.item)
-            else:
-                self.place = self.liste_items.index(self.item)
-                self.liste_items[self.place].quantite += quantite
-        print(self.liste_items)
-# make this| similar to the method ajouter_item with line 199 as reference
-#          V
-    def retirer_item(self, quantite, nom):
-        self.replay = True
-        while self.replay:
-            print(f"\néquipement: {self.liste_items}")
-            self.item_a_retirer = input("Quel item voulez-vous retirer? >>")
-            if self.liste_items[1] == self.item_a_retirer:
-                self.nbr_item = input("Combien d'item voulez-vous retirer? >>")
-                self.nbr_item_effacer = int(self.nbr_item)
-                if self.liste_items[0] < self.nbr_item_effacer:
-                    print("\nERROR: Le nombre d'item a retirer est plus grand que le nombre d'item")
-                elif self.nbr_item_effacer < 0:
-                    print("\nERROR: Ne peux pas effacer un nombre d'objets négatif")
+            for i in range(0, len(self.liste_items)):
+                if self.nom in self.liste_items[i].nom:
+                    self.liste_items[i].quantite += quantite
+                    break
                 else:
-                    self.liste_items[0] -= self.nbr_item_effacer
-                    print(f"il reste {self.liste_items[0]} {self.liste_items[1]}")
-                    if self.liste_items[0] == 0:
-                        print(f"\nVous n'avez plus de {self.liste_items[1]}, effacage de l'item")
-                        self.liste_items.clear()
-                        self.replay = False
-            elif self.item_a_retirer == "aucun":
-                print("\nAucun objet n'est retiré")
-                self.replay = False
-            elif self.liste_items[1] != self.item_a_retirer:
-                print("\nERROR: L'item n'est pas valide ou n'est pas/plus dans le sac")
+                    self.liste_items.append(self.item)
+        print(self.liste_items)
+
+    def retirer_item(self, quantite, nom):
+        self.quantite = quantite
+        self.nom = nom
+        self.item = Item(self.quantite, self.nom)
+        if len(self.liste_items) == 0:
+            print("sac à dos vide")
+        else:
+            for i in range(0, len(self.liste_items) - 1):
+                if self.nom == self.liste_items[i].nom:
+                    if self.liste_items[i].quantite >= quantite:
+                        self.liste_items[i].quantite -= quantite
+                        if self.liste_items[i].quantite == 0:
+                            self.liste_items.remove(self.liste_items[i])
+                    else:
+                        print("Vous ne pouvez pas retirer plus d'objets qu'il y en a")
+            print(self.liste_items)
 
     def voir_contenue(self):
         if len(self.liste_items) == 0:
@@ -193,8 +208,8 @@ h = Hero()
 # h.verifier_vie()
 
 b = BackPack()
-b.ajouter_item(10, "or")
-b.ajouter_item(10, "Argent")
-b.ajouter_item(10, "or")
-b.retirer_item(10, "or")
+b.ajouter_item(7, "or")
+b.ajouter_item(22, "Argent")
+b.ajouter_item(5, "or")
+b.retirer_item(4, "or")
 b.voir_contenue()

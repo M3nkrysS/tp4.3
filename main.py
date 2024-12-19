@@ -155,14 +155,12 @@ class BackPack:
         self.liste_items = []
 
     def ajouter_item(self, quantite, nom):
-        self.quantite = quantite
-        self.nom = nom
-        self.item = Item(self.quantite, self.nom)
-        if len(self.liste_items) == 0:
+        self.item = Item(quantite, nom)
+        if len(self.liste_items) <= 0:
             self.liste_items.append(self.item)
         else:
             for i in range(0, len(self.liste_items)):
-                if self.nom in self.liste_items[i].nom:
+                if nom in self.liste_items[i].nom:
                     self.liste_items[i].quantite += quantite
                     break
                 else:
@@ -170,24 +168,22 @@ class BackPack:
         print(self.liste_items)
 
     def retirer_item(self, quantite, nom):
-        self.quantite = quantite
-        self.nom = nom
-        self.item = Item(self.quantite, self.nom)
-        if len(self.liste_items) == 0:
+        self.item = Item(quantite, nom)
+        if len(self.liste_items) <= 0:
             print("sac à dos vide")
         else:
             for i in range(0, len(self.liste_items) - 1):
-                if self.nom == self.liste_items[i].nom:
+                if nom == self.liste_items[i].nom:
                     if self.liste_items[i].quantite >= quantite:
                         self.liste_items[i].quantite -= quantite
-                        if self.liste_items[i].quantite == 0:
+                        if self.liste_items[i].quantite <= 0:
                             self.liste_items.remove(self.liste_items[i])
                     else:
                         print("Vous ne pouvez pas retirer plus d'objets qu'il y en a")
             print(self.liste_items)
 
     def voir_contenue(self):
-        if len(self.liste_items) == 0:
+        if len(self.liste_items) <= 0:
             print("\nVous n'avez pas d'items dans votre sac")
         else:
             print(f"\nVous avez {self.liste_items}")
